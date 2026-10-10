@@ -35,3 +35,14 @@ test('simulated hotel deposit survives refresh and can be reset',async({page})=>
  await page.getByRole('button',{name:'Funding & Payments'}).click();
  await expect(page.getByRole('button',{name:/Simulate deposit/})).toBeEnabled();
 });
+
+test('mobile worker menu reaches Safety and Profile without hidden actions',async({page})=>{
+ await page.setViewportSize({width:390,height:844});
+ await page.goto('/');
+ await page.getByRole('button',{name:'Open worker menu'}).click();
+ await page.getByRole('button',{name:'Safety',exact:true}).click();
+ await expect(page.getByRole('heading',{name:'A clear way to ask for help.'})).toBeVisible();
+ await page.getByRole('button',{name:'Open worker menu'}).click();
+ await page.getByRole('button',{name:'Profile',exact:true}).click();
+ await expect(page.getByRole('heading',{name:'Your details. Your next opportunity.'})).toBeVisible();
+});
